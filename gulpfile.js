@@ -16,6 +16,11 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 
+browserSync.init({
+    injectChanges: true,
+    server: "./app"
+});
+
 var reload = browserSync.reload;
 var merge = require('merge-stream');
 var path = require('path');
@@ -237,7 +242,7 @@ gulp.task('serve', ['styles', 'elements'], function() {
       baseDir: ['.tmp', 'app'],
       middleware: [historyApiFallback()]
     }
-  }).create().init();
+  });
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
