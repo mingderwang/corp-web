@@ -15,6 +15,12 @@ var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
+
+browserSync.init({
+    injectChanges: true,
+    server: "./app"
+});
+
 var reload = browserSync.reload;
 var merge = require('merge-stream');
 var path = require('path');
