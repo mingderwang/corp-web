@@ -15,6 +15,12 @@ var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
+
+browserSync.init({
+    injectChanges: true,
+    server: "./app"
+});
+
 var reload = browserSync.reload;
 var merge = require('merge-stream');
 var path = require('path');
@@ -137,7 +143,7 @@ gulp.task('copy', function() {
   // Copy over only the bower_components we need
   // These are things which cannot be vulcanized
   var bower = gulp.src([
-    'app/bower_components/{webcomponentsjs,platinum-sw,sw-toolbox,promise-polyfill}/**/*'
+    'app/bower_components/*/**/*'
   ]).pipe(gulp.dest(dist('bower_components')));
 
   return merge(app, bower)
@@ -231,7 +237,7 @@ gulp.task('serve', ['styles', 'elements'], function() {
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
-    // https: true,
+    https: true,
     server: {
       baseDir: ['.tmp', 'app'],
       middleware: [historyApiFallback()]
@@ -261,7 +267,7 @@ gulp.task('serve:dist', ['default'], function() {
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
-    // https: true,
+    https: true,
     server: dist(),
     middleware: [historyApiFallback()]
   });
